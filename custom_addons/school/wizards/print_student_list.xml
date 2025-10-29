@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Vue formulaire -->
+    <record id="print_student_list_form" model="ir.ui.view">
+        <field name="name">print.student.list.form</field>
+        <field name="model">print.student.list</field>
+        <field name="arch" type="xml">
+            <form string="Print student list">
+                <sheet>
+                    <group>
+                        <field name="student_ids"/>
+                    </group>
+                    <footer>
+                        <button name="print_student_list" type="object" string="Imprimer" class="btn btn-success"/>
+                        <button special="cancel" string="Annuler"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="print_student_list_action" model="ir.actions.act_window">
+        <field name="name">Imprimer un Eleve</field>
+        <field name="res_model">print.student.list</field>
+        <field name="view_mode">form</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="print_student_list_form"/>
+    </record>
+
+    <menuitem id="School_menu" name="School" sequence="0"/>
+    <menuitem id="print_student_list_menu" groups="school.admin_groups" name="Imprimer Eleve" action="print_student_list_action"
+              parent="School_menu" sequence="30"/>
+
+</odoo>

@@ -1,0 +1,16 @@
+# Dépendances et fichiers temporaires
+.venv/
+__pycache__/
+*.pyc
+*.log
+*.pid
+
+# Fichiers générés par Odoo
+filestore/
+.local/share/Odoo/
+
+# Le code source de la version Odoo (si vous ne l'avez pas modifié)
+odoo/
+
+# Fichier de configuration (souvent sensible, contient les mots de passe de DB)
+*.conf

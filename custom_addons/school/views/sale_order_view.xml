@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="sale_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="confirmed_user_id"/>
+                <field name="city_id"/>
+            </xpath>
+            <!--                            pour faire disparaitre le terme de paiement-->
+             <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                 <attribute name="invisible">0</attribute>
+                 <attribute name="required">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_tree" model="ir.ui.view">
+        <field name="name">sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="confirmed_user_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_city_action" model="ir.actions.act_window">
+        <field name="name">Ville</field>
+        <field name="res_model">sale.city</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>
+                cliquez sur nouveau pour creer une nouvelle ville
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id = "sale_city_menu"  name="Ville" action="sale_city_action" parent="sale.product_menu_catalog" sequence="18"/>
+
+</odoo>
+
+

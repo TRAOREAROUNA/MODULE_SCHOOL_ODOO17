@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="create_student_form" model="ir.ui.view">
+        <field name="name">create.student.form</field>
+        <field name="model">create.student</field>
+        <field name="arch" type="xml">
+            <form string=" Creer Élève">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="date"/>
+                    </group>
+                    <footer>
+                        <button name="create_student" type="object" string="Save" class="btn btn-success"/>
+                        <button special="cancel" string="Annuler"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="create_student_action" model="ir.actions.act_window">
+        <field name="name">Creer un Eleve</field>
+        <field name="res_model">create.student</field>
+        <field name="view_mode">form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>
+                cliquez sur nouveau pour creer une nouvelle ville
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="School_menu" name="School" sequence="0"/>
+    <menuitem id="create_student_menu" groups="school.admin_groups" name="Creer Eleve" action="create_student_action"
+              parent="School_menu" sequence="25"/>
+</odoo>

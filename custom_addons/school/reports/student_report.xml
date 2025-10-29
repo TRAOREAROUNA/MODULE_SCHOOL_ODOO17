@@ -1,0 +1,116 @@
+<odoo>
+    <!-- Déclaration de l'action du rapport -->
+    <record id="action_report_student" model="ir.actions.report">
+        <field name="name">Fiche Inscription</field>
+        <field name="model">school.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school.report_student_document</field>
+        <field name="report_file">school.report_student_document</field>
+        <field name="binding_model_id" ref="model_school_student"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_student_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="student">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">Fiche Étudiant :
+                            <t t-esc="student.name"/>
+                        </h2>
+                        <p>Nom :
+                            <span t-field="student.name"/>
+                        </p>
+                        <p>Age :
+                            <span t-esc="student.age"/>
+                        </p>
+                        <br/>
+                        <p>Age Naissance :
+                            <span t-field="student.birth_date"/>
+                        </p>
+                        <p>Age Naissance :
+                            <t t-esc="student.birth_date"/>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="action_carte_didentité" model="ir.actions.report">
+        <field name="name">Carte d'identité</field>
+        <field name="model">school.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school.report_student_card_document</field>
+        <field name="report_file">school.report_student_card_document</field>
+        <field name="binding_model_id" ref="model_school_student"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <template id="report_student_card_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div class="container mt-5">
+                            <div class="id-card mx-auto">
+                                <div class="card">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="card-title mb-0">Carte d'identité</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <t t-if="o.photo">
+                                                    <img width="200"
+                                                         t-att-src="'/web/image/school.student/' + str(o.id) + '/photo'"
+                                                         alt="avatar"/>
+                                                </t>
+                                                <t t-else=''>
+                                                    Pas de photo
+                                                </t>
+                                            </div>
+                                            <div class="col-7">
+                                                <p>
+                                                    <strong>Nom :</strong> <h4 t-field="o.name"/>
+
+                                                </p>
+                                                <p>
+                                                    <strong>Date de naissance :</strong>
+                                                    <span t-field="o.birth_date"/>
+                                                </p>
+                                                <p>
+                                                    <strong>Sexe :</strong>
+                                                    <span t-field="o.sexe"/>
+                                                </p>
+                                                <p>
+                                                    <strong>Classe :</strong>
+                                                    <span t-field="o.classe_id.name"/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <p>
+                                                <strong>Signature :</strong>
+                                            </p>
+                                            <div class="signature-box">
+                                                <span class="signature"><span t-esc="o.name"/></span>
+                                            </div>
+                                            <p class="text-end mt-2">
+                                                <small>Date de signature :
+                                                    <span id="signatureDate"><t t-esc="datetime.datetime.today()"/></span>
+                                                </small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="school_student_action" model="ir.actions.act_window">
+        <field name="name">Student</field>
+        <field name="res_model">school.student</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[]</field>
+<!--        <field name="domain">[("sexe","=","Feminin")]</field>-->
+        <field name="context">{"default_name": "Toto12"}</field>
+        <field name="help" type="html">
+            <p>
+                cliquez sur nouveau pour creer un nouveau student
+            </p>
+        </field>
+    </record>
+
+    <!-- Vue formulaire -->
+    <record id="school_student_form" model="ir.ui.view">
+        <field name="name">school.student.form</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <form string="Élève">
+                <header>
+                    <button name="compute_inscription" invisible="state in ['inscription','abandone','exclu']"
+                            type="object" class="btn btn-success" string="Inscrire"/>
+                    <button name="compute_abandonne" invisible="state in ['abandonne','exclu']" type="object"
+                            class="btn btn-warning" string="Abandon"/>
+                    <button name="compute_exclu" groups="school.admin_groups" invisible="state in ['exclu','abandonne']" type="object"
+                            class="btn btn-danger" string="Exclu"/>
+                    <button name="compute_preinscription" class="btn btn-primary" invisible="state != 'exclu'"
+                            type="object" string="Preinscription"/>
+                    <button name="%(create_student_action)d" type="action" string="Creer un eleve"/>
+                    <button name="%(school_course_action)d" type="action" string="Cours"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon" title="Archivé" bg_color="bg-danger" invisible="active == True"/>
+                    <field name="photo" widget="image" class="oe_avatar"/>
+                    <group>
+                        <group>
+<!--                            pour l archivage-->
+                            <field name="active" invisible="1"/>
+                            <field name="matricule"/>
+                            <field name="name"/>
+                            <field name="birth_date"/>
+                            <field name="description" groups="school.admin_groups"/>
+                            <field name="is_former_student"/>
+                            <field name="email" widget="email"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="progression" widget="progressbar"/>
+                            <field name="date_start"/>
+                            <button name="compute_progress" type="object" string="Faire progresser"/>
+                            <field name="couleur" widget="color"/>
+                            <field name="other_color" widget="color_picker"/>
+                        </group>
+                        <group>
+                            <field name="sexe"/>
+                            <field name="age"/>
+                            <field name="classe_id"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="course_time" widget="float_time"/>
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Page_cours" string="Cours">
+                            <field name="course_ids" widget="many2many_tags"/>
+                        </page>
+                        <page name="Page_note" string="Note">
+                            <field name="note_ids">
+                                <tree>
+                                    <field name="course_id"/>
+                                    <field name="classe_note"/>
+                                    <field name="exam_note"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                 <!-- chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+     <!-- Vue tree -->
+    <record id="school_student_tree" model="ir.ui.view">
+        <field name="name">school.student.tree</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <tree string="Élève"
+                  decoration-success="state == 'inscription'">
+                <field name="name"/>
+                <field name="birth_date"/>
+                <field name="description"/>
+                <field name="is_former_student"/>
+                <field name="sexe" optional="hide"/>
+                <field name="age" optional="show"/>
+                <field name="classe_id"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'preinscription'"
+                       decoration-danger="state == 'exclu'"
+                       decoration-warning="state == 'abandonne'"
+                       decoration-success="state == 'inscription'"
+                />
+            </tree>
+        </field>
+    </record>
+
+
+ <!-- Vue kanban -->
+    <record id="school_student_kanban" model="ir.ui.view">
+        <field name="name">school.student.kanban</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <kanban class="kanban-box">
+                <field name="name"/>
+                <field name="age"/>
+                <template name="name">
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image me-1">
+                                <img t-att-src="kanban_image('school.student','photo',record.id.raw_value)"
+                                     alt="avatar eleve" class="o_kanban_image"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <div class="oe_kanban_record_top m10">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                                <div>
+                                    Age:
+                                    <field name="age"/>
+                                </div>
+                                <div>
+                                    Date de naissance :
+                                    <field name="birth_date"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </template>
+            </kanban>
+        </field>
+    </record>
+
+
+ <!-- Vue search -->
+    <record id="school_student_search" model="ir.ui.view">
+        <field name="name">school.student.search</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <search string="Chercher un eleve">
+                     <field name="name"/>
+                <field name="birth_date"/>
+                <field name="description"/>
+                <field name="is_former_student"/>
+                <field name="sexe"/>
+                <field name="age"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="classe_id"/>
+
+                 <!-- filtre -->
+                <filter name="sexe" string ="Masculin"  domain="[('sexe','=','Masculin')]"/>
+                <filter  name="sexe" string ="Feminin" domain="[('sexe','=','Feminin')]"/>
+                <filter  name="active" string ="Archive" domain="[('active','=',False)]"/>
+
+                 <!-- group by -->
+                <group expand="1" string="Group by">
+                    <filter  name="sexe" string ="Sexe" context="{'group_by':'sexe'}"/>
+                    <filter  name="classe" string ="Classe" context="{'group_by':'classe_id'}"/>
+                    <filter  name="active" string ="Archivage" context="{'group_by':'active'}"/>
+                </group>
+
+
+                 <!-- searchpanel -->
+                <searchpanel>
+                    <field  name="sexe" string ="Sexe" icon="fa-user" select="multi" enable_counters="1"/>
+                    <field  name="classe_id" string ="Classe" icon="fa-graduation-cap" select="multi" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+     <!-- menu et sous menu -->
+    <menuitem id="School_menu" name="School" sequence="0"/>
+    <menuitem id="school_student_menu" name="Student" action="school_student_action" parent="School_menu" sequence="5"/>
+</odoo>
+
+

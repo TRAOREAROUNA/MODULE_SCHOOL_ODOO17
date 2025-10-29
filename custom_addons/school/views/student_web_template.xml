@@ -1,0 +1,54 @@
+<odoo>
+    <template id="student_template_id" name="student">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Student Body</h1>
+                <t t-esc="name"/>
+                <table class="table table-sm">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Age</th>
+                    </tr>
+                    <t t-foreach="students" t-as="student">
+                        <tr>
+                            <td>
+                                <t t-esc="student['name']"/>
+                            </td>
+                            <td>
+                                <t t-esc="student['age']"/>
+                            </td>
+                        </tr>
+                    </t>
+
+                </table>
+
+            </div>
+        </t>
+    </template>
+
+
+
+    <template id="student_form_template" name="student Form">
+        <t t-call="website.layout">
+            <div class="container p-5" >
+               <form method="post">
+                   <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="form-group">
+                    <label for="name" class="control-label">Nom Eleve</label>
+                    <input type="text" placeholder="Nom de l eleve" class="form-control" name="name"/>
+                </div>
+                   <div class="form-group">
+                       <select  name="sexe" id="sexe" class="form-select">
+                           <option value="">--Choisir--</option>
+                           <option value="Masculin">Masculin</option>
+                           <option value="Feminin">Feminin</option>
+                       </select>
+                   </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary"/>
+                </div>
+               </form>
+            </div>
+        </t>
+    </template>
+</odoo>
