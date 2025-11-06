@@ -1,0 +1,66 @@
+<odoo>
+    <data>
+
+        <record id="action_report_liste_personnel" model="ir.actions.report">
+            <field name="name">Liste du Personnel</field>
+            <field name="model">gestion.employe</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">gestion_employe.report_personnel_template</field>
+            <field name="report_file">gestion_employe.report_personnel_template</field>
+            <field name="binding_model_id" ref="model_gestion_employe"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+        <template id="report_personnel_template">
+            <t t-call="web.html_container">
+
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <h2>Liste du Personnel</h2>
+                        <p>Date d'impression:
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                        </p>
+
+                        <table class="table table-sm mt-4">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Téléphone</th>
+                                    <th>Service</th>
+                                    <th>Date d'Embauche</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <t t-foreach="docs" t-as="doc">
+                                    <tr>
+                                        <td>
+                                            <span t-field="doc.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.email"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.phone"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.service_id.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.date_embauche" t-options='{"widget": "date"}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="partenaire_etendu_form">
+            <field name="name">res.partner.form.extension</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="status_partenaire"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_partner_form_extended_commercial" model="ir.ui.view">
+            <field name="name">res.partner.form.commercial.extension</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="commercial_id" field_attrs="{'invisible': [('customer_rank', '=', 0)]}"/>
+<!--                    <field name="commercial_id" invisible="customer_rank == 0"/>-->
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+
+

@@ -1,0 +1,39 @@
+<odoo>
+    <record id="employee_filter_wizard_form_view" model="ir.ui.view">
+        <field name="name">gestion.employe.filter.wizard.form</field>
+        <field name="model">gestion.employe.filter.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Filtrer les Employés">
+                <group>
+                    <field name="status_filter"/>
+                </group>
+                <footer>
+                    <button
+                            name="action_apply_filter"
+                            string="Appliquer le Filtre"
+                            type="object"
+                            class="btn-primary"
+                    />
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_open_employee_filter_wizard" model="ir.actions.act_window">
+        <field name="name">Filtre Rapide Employés</field>
+        <field name="res_model">gestion.employe.filter.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+            id="menu_employee_filter_wizard"
+            name="Filtrer Actifs/Inactifs"
+            action="action_open_employee_filter_wizard"
+            parent="menu_gestion_employe"
+            sequence="100"
+    />
+</odoo>
+
