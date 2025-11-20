@@ -55,7 +55,10 @@
                 <field name="name"/>
                 <field name="email"/>
                 <field name="service_id"/>
+                <field name="conge_ids"/>
                 <field name="actif"/>
+                <field name="contrat_ids"/>
+
             </tree>
         </field>
     </record>
@@ -72,8 +75,11 @@
                         <field name="email"/>
                         <field name="phone"/>
                         <field name="date_embauche"/>
+                        <field name="conge_ids"/>
                         <field name="service_id"/>
                         <field name="actif"/>
+
+                        <field name="contrat_ids"/>
                         <field name="photo" widget="image"/>
                     </group>
                 </sheet>

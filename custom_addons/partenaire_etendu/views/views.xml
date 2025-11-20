@@ -19,8 +19,9 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='category_id']" position="after">
-                    <field name="commercial_id" field_attrs="{'invisible': [('customer_rank', '=', 0)]}"/>
-<!--                    <field name="commercial_id" invisible="customer_rank == 0"/>-->
+<!--                    <field name="commercial_id" field_attrs="{'invisible': [('customer_rank', '=', 0)]}"/>-->
+                    <field name="customer_rank" invisible="1"/>
+                    <field name="commercial_id" invisible="customer_rank == 0"/>
                 </xpath>
             </field>
         </record>

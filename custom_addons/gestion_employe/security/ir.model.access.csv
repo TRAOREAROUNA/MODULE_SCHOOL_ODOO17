@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_gestion_employe,access.gestion.employe,model_gestion_employe,base.group_user,1,1,1,1
 access_gestion_service,access.gestion.service,model_gestion_service,base.group_user,1,1,1,1
+access_gestion_contrat,access.gestion.contrat,model_gestion_contrat,base.group_user,1,1,1,1
+access_gestion_conge,access.gestion.conge,model_gestion_conge,base.group_user,1,1,1,1

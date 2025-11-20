@@ -1,0 +1,64 @@
+<odoo>
+    <record id="view_conge_tree" model="ir.ui.view">
+        <field name="name">gestion.conge.tree</field>
+        <field name="model">gestion.conge</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state == 'approved'" decoration-danger="state == 'refused'">
+                <field name="name"/>
+                <field name="employe_id"/>
+                <field name="date_debut"/>
+                <field name="date_fin"/>
+                <field name="duree_jours"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_conge_form" model="ir.ui.view">
+        <field name="name">gestion.conge.form</field>
+        <field name="model">gestion.conge</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <!-- Correction des boutons: states="..." devient invisible="[('state', 'not in', ['...'])]" -->
+                    <button name="action_submit" type="object" string="Soumettre"
+                            invisible="[('state', 'not in', ['draft'])]" class="oe_highlight"/>
+                    <button name="action_approve" type="object" string="Approuver"
+                            invisible="[('state', 'not in', ['submitted'])]" class="oe_highlight"/>
+                    <button name="action_refuse" type="object" string="Refuser"
+                            invisible="[('state', 'not in', ['submitted'])]"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="Ex: Congés Été 2025"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employe_id"/>
+                            <field name="date_debut"/>
+                        </group>
+                        <group>
+                            <field name="duree_jours"/>
+                            <field name="date_fin"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gestion_conge" model="ir.actions.act_window">
+        <field name="name">Demandes de Congés</field>
+        <field name="res_model">gestion.conge</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_conge_list"
+        name="Congés"
+        parent="menu_gestion_rh_root"
+        action="action_gestion_conge"
+        sequence="40"/>
+</odoo>

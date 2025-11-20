@@ -1,0 +1,50 @@
+<odoo>
+    <record id="view_contrat_tree" model="ir.ui.view">
+        <field name="name">gestion.contrat.tree</field>
+        <field name="model">gestion.contrat</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="type_contrat"/>
+                <field name="date_debut"/>
+                <field name="date_fin"/>
+                <field name="employe_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_contrat_form" model="ir.ui.view">
+        <field name="name">gestion.contrat.form</field>
+        <field name="model">gestion.contrat</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="type_contrat"/>
+                        <field name="date_debut"/>
+                        <field name="date_fin"/>
+                        <field name="employe_id"/>
+                    </group>
+<!--                    <notebook>-->
+<!--                        <page string="Employés">-->
+<!--                            <field name="employe_ids">-->
+<!--                                <tree>-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="email"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gestion_contrat" model="ir.actions.act_window">
+        <field name="name">Contrat</field>
+        <field name="res_model">gestion.contrat</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_contrat" name="Contrat" parent="menu_gestion_employe" action="action_gestion_contrat"/>
+
+</odoo>

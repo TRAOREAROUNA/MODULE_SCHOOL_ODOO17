@@ -10,9 +10,12 @@ class Employe(models.Model):
     phone = fields.Char(string='Téléphone')
     date_embauche = fields.Date(string='Date d embauche')
 
+
     actif = fields.Boolean(string='Actif', default=True)
     photo = fields.Binary(string='Photo')
     service_id = fields.Many2one('gestion.service', string='Service')
+    contrat_ids = fields.One2many('gestion.contrat','employe_id', string='Contrat')
+    conge_ids = fields.One2many('gestion.conge','employe_id', string='Conge')
     _sql_constraints = [
         ('email_uniq', 'unique (email)', "Cette adresse e-mail est déjà utilisée par un autre employé !"),
     ]

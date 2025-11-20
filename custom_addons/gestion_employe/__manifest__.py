@@ -26,6 +26,8 @@ Module de gestion des employes
         'views/employe_views.xml',
         'views/templates.xml',
         'views/employee_filter_wizard_views.xml',
+        'views/type_contrat.xml',
+        'views/conge_view.xml',
         'report/rapport_liste_employe.xml'
     ],
         'installable':True,
